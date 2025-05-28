@@ -6,10 +6,10 @@ terraform {
     }
   }
    backend "s3" {
-    bucket         = "terraform-state-sensors-lambda"
-    key            = "terraform/terraform.tfstate"
+    bucket         = "terraform-final-bucket"
+    key            = "terraform.tfstate"
     region         = "us-east-1"
-    dynamodb_table = "terraform-locks"
+    dynamodb_table = "terraform-lock"
     encrypt        = true
   }
 }
