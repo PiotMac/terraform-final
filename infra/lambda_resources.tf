@@ -7,5 +7,5 @@ data "archive_file" "grouper" {
 data "archive_file" "aggregator" {
     type        = "zip"
     source_dir  = "../src/lambda/aggregator/"
-    output_path = "../src/lambda/dist/transformer.zip"
+    output_path = "../src/lambda/dist/aggregator.zip"
 }
