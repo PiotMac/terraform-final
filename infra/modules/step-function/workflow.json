@@ -1,0 +1,33 @@
+{
+  "StartAt": "Fetch Data",
+  "States": {
+    "Fetch Data": {
+      "Type": "Task",
+      "ResultPath": "$.grouped_data",
+      "Resource": "${grouper_lambda_arn}",
+      "Next": "LocalizationMap"
+    },
+    "LocalizationMap": {
+      "Type": "Map",
+      "ItemsPath": "$.grouped_data",
+      "ItemProcessor": {
+        "ProcessorConfig": {
+          "Mode": "DISTRIBUTED",
+          "ExecutionType": "STANDARD"
+        },
+        "StartAt": "Compute Averages",
+        "States": {
+          "Compute Averages": {
+            "Type": "Task",
+            "Resource": "${aggregator_lambda_arn}",
+            "End": true
+          }
+        }
+      },
+      "End": true,
+      "ResultPath": "$.results",
+      "Label": "LocalizationMap",
+      "MaxConcurrency": 10
+    }
+  }
+}
